@@ -1,8 +1,9 @@
-import { Canvas } from "@react-three/fiber";
-import { Planet } from "../components/Planet";
-import { Environment, Float, Lightformer } from "@react-three/drei";
 import { useMediaQuery } from "react-responsive";
-import AnimatedHeaderSection from "../components/AnimatedHeaderSection";
+import AnimatedHeaderSection from "../components/AnimatedHeaderSection"; // Assumes components folder is at the same level
+import Prism from "../components/Prism";
+import Aurora from "../components/Aurora";
+import {Planet} from "../components/Planet";
+
 const Hero = () => {
   const isMobile = useMediaQuery({ maxWidth: 853 });
   const text = `A versatile designer that will help fix your lifedd`;
@@ -18,43 +19,32 @@ const Hero = () => {
         className="absolute inset-0 -z-50"
         style={{ width: "100vw", height: "100vh" }}
       >
-        <Canvas
-          shadows
-          camera={{ position: [0, 0, -10], fov: 17.5, near: 1, far: 20 }}
-        >
-          <ambientLight intensity={0.5} />
-          <Float speed={0.5}>
-            <Planet scale={isMobile ? 0.7 : 1} />
-          </Float>
-          <Environment resolution={256}>
-            <group rotation={[-Math.PI / 3, 4, 1]}>
-              <Lightformer
-                form={"circle"}
-                intensity={2}
-                position={[0, 5, -9]}
-                scale={10}
-              />
-              <Lightformer
-                form={"circle"}
-                intensity={2}
-                position={[0, 3, 1]}
-                scale={10}
-              />
-              <Lightformer
-                form={"circle"}
-                intensity={2}
-                position={[-5, -1, -1]}
-                scale={10}
-              />
-              <Lightformer
-                form={"circle"}
-                intensity={2}
-                position={[10, 1, 0]}
-                scale={16}
-              />
-            </group>
-          </Environment>
-        </Canvas>
+        {/* This is the correct implementation of the Prism component */}
+        {/* <Prism
+          animationType="3drotate"
+          timeScale={0.5}
+          height={3}
+          baseWidth={3}
+          scale={3.6}
+          hueShift={1}
+          colorFrequency={0.5}
+          noise={0.1}
+          glow={1}
+          transparent={true}
+          bloom = {0.5}
+        /> */
+
+          <Aurora
+
+            colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
+
+            blend={0.5}
+
+            amplitude={0.5}
+
+            speed={0.5}
+
+          />}
       </figure>
     </section>
   );

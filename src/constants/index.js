@@ -61,10 +61,10 @@ export const servicesData = [
 export const projects = [
   {
     id: 1,
-    name: "Mobile Accessories E-commerce",
+    name: "Women and Systematic Erasure - A Data Narrative",
     description:
       "An online store specializing in phone accessories including cases, chargers, cables, and power banks with MagSafe compatibility.",
-    href: "",
+    href: "https://womenhistory.vercel.app/",
     image: "/assets/projects/mobile-accessories-store.jpg",
     bgImage: "/assets/backgrounds/blanket.jpg",
     frameworks: [
@@ -77,10 +77,10 @@ export const projects = [
   },
   {
     id: 2,
-    name: "Plant Shop E-commerce",
+    name: "Form Redesign - Artisan Pehchaan Card",
     description:
       "An online store specializing in rare and decorative plants with a clean, user-friendly interface.",
-    href: "",
+    href: "https://www.behance.net/gallery/238402077/Form-Redesign?lo=fe6896b1df80caa5695acbb8c39c5c00cf9ed102b9c6c092b0cc6a2f3757d90d",
     image: "/assets/projects/plant-shop.jpg",
     bgImage: "/assets/backgrounds/curtains.jpg",
     frameworks: [
@@ -92,10 +92,10 @@ export const projects = [
   },
   {
     id: 3,
-    name: "Apple Tech Marketplace",
+    name: "Spotify Poster Generator",
     description:
       "An e-commerce platform for Apple products and accessories with deals and category filtering.",
-    href: "",
+    href: "https://www.behance.net/gallery/238402137/Spotify-Poster-Generator?lo=0b754092cc65132d3c7609ba952f1fcd1f3e46e112d04f36d1b07300ca5a0839",
     image: "/assets/projects/apple-tech-store.jpg",
     bgImage: "/assets/backgrounds/map.jpg",
     frameworks: [
@@ -107,10 +107,10 @@ export const projects = [
   },
   {
     id: 4,
-    name: "Electronics & Gadgets Store",
+    name: "Data Biopic - Ward Shelley",
     description:
       "A multi-category online shop featuring electronics, home appliances, and gaming gear with special offers.",
-    href: "",
+    href: "https://www.behance.net/gallery/238401869/Ward-Shelley-Data-Biopic?lo=b84557e4e5762a690ec65491a9aecb6799f5fb97826e3ca1e233b1e31919d3fd",
     image: "/assets/projects/electronics-store.jpg",
     bgImage: "/assets/backgrounds/poster.jpg",
     frameworks: [
@@ -122,11 +122,11 @@ export const projects = [
   }
 ];
 export const socials = [
-  { name: "Instagram", href: "https://www.instagram.com/ali.sanatidev/reels/" },
+  { name: "LinkedIn", href: "https://www.linkedin.com/in/kuldeep-singh-9818721068/" },
   {
-    name: "Youtube",
-    href: "https://www.youtube.com/channel/UCZhtUWTtk3bGJiMPN9T4HWA",
+    name: "Behance",
+    href: "https://www.behance.net/kuldeesingh",
   },
-  { name: "LinkedIn", href: "https://www.linkedin.com/in/ali-sanati/" },
-  { name: "GitHub", href: "https://github.com/Ali-Sanati" },
+  { name: "Instagram", href: "https://www.instagram.com/kuldeep._.s_/" },
+  { name: "Letterboxd", href: "https://letterboxd.com/Lettucefries/" },
 ];

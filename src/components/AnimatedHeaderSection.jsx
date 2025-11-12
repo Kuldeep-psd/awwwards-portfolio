@@ -1,8 +1,11 @@
- import React from "react";
-import { useRef } from "react";
-import { AnimatedTextLines } from "../components/AnimatedTextLines";
+import React, { useRef, useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { AnimatedTextLines } from "./AnimatedTextLines";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+
+const animatedWords = ["Des", "Art", "Systems", "Tech"];
+
 const AnimatedHeaderSection = ({
   subTitle,
   title,
@@ -14,6 +17,21 @@ const AnimatedHeaderSection = ({
   const headerRef = useRef(null);
   const shouldSplitTitle = title.includes(" ");
   const titleParts = shouldSplitTitle ? title.split(" ") : [title];
+
+  const [index, setIndex] = useState(0);
+  const isKulDes = title === "KulDes";
+  const currentWord = animatedWords[index];
+
+  useEffect(() => {
+    if (!isKulDes) return;
+
+    const interval = setInterval(() => {
+      setIndex((prevIndex) => (prevIndex + 1) % animatedWords.length);
+    }, 2000);
+
+    return () => clearInterval(interval);
+  }, [isKulDes]); 
+
   useGSAP(() => {
     const tl = gsap.timeline({
       scrollTrigger: withScrollTrigger
@@ -38,6 +56,7 @@ const AnimatedHeaderSection = ({
       "<+0.2"
     );
   }, []);
+
   return (
     <div ref={contextRef}>
       <div style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)" }}>
@@ -54,9 +73,30 @@ const AnimatedHeaderSection = ({
             <h1
               className={`flex flex-col gap-12 banner-text-responsive sm:gap-16 md:block ${textColor}`}
             >
-              {titleParts.map((part, index) => (
-                <span key={index}>{part} </span>
-              ))}
+              {isKulDes ? (
+                <>
+                  <span>Kul</span>
+                  
+                  <span style={{ display: "inline-block", minWidth: "2.2em", textAlign: "left", perspective: '300px' }}>
+                    <AnimatePresence mode="wait">
+                      <motion.span
+                        key={currentWord}
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -15 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                        style={{ display: "inline-block" }}
+                      >
+                        {currentWord}
+                      </motion.span>
+                    </AnimatePresence>
+                  </span>
+                </>
+              ) : (
+                titleParts.map((part, index) => (
+                  <span key={index}>{part} </span>
+                ))
+              )}
             </h1>
           </div>
         </div>
