@@ -20,8 +20,8 @@ const Hero = () => {
         style={{ width: "100vw", height: "100vh" }}
       >
         {/* This is the correct implementation of the Prism component */}
-        {/* <Prism
-          animationType="3drotate"
+        {<Prism
+          animationType="hover"
           timeScale={0.5}
           height={3}
           baseWidth={3}
@@ -32,20 +32,20 @@ const Hero = () => {
           glow={1}
           transparent={true}
           bloom = {0.5}
-        /> */
+        />
 
-          <Aurora
+          // <Aurora
 
-            colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
+          //   colorStops={["#3A29FF", "#FF94B4", "#FF3232"]}
 
-            blend={0.5}
+          //   blend={0.5}
 
-            amplitude={0.5}
+          //   amplitude={0.5}
 
-            speed={0.5}
+          //   speed={0.5}
 
-          />}
-      </figure>
+          // />}
+     } </figure>
     </section>
   );
 };
