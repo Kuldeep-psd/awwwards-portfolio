@@ -30,7 +30,7 @@ export const servicesData = [
       "Critical Design",
     ],
     imageUrl: "/assets/projects/future.webp",
-    caseStudyUrl: "httpshttps://petcoin.vercel.app/",
+    caseStudyUrl: "https://petcoin.vercel.app/",
   },
   {
     title: "Indian Public Libraries DPI",

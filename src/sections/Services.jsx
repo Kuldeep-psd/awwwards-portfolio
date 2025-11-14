@@ -21,7 +21,7 @@ const ArrowIcon = () => (
   </svg>
 );
 
-const Services = () => {
+const services = () => {
   const text = `A look at how I explore ideas, 
   learn from people, and shape them into 
   thoughtful design.`;
@@ -82,7 +82,7 @@ const Services = () => {
   }, []);
 
   return (
-    <section id="services" className="min-h-screen bg-black rounded-t-4xl">
+    <section id="projects" className="min-h-screen bg-black rounded-t-4xl">
       <AnimatedHeaderSection
         subTitle={'The work behind the work.'}
         title={'Case Studies'}
@@ -114,10 +114,10 @@ const Services = () => {
                     {service.title}
                   </h2>
 
-                  {/* --- NEW: "Work in Progress" Status --- */}
+{/* --- NEW: "Work in Progress" Status --- */}
                   {service.status && (
                     <span
-                      className="text-sm font-medium tracking-wider text-pink-100 uppercase"
+                      className="text-sm font-medium tracking-wider text-gray-400 uppercase"
                     >
                       {service.status}
                     </span>
@@ -192,4 +192,4 @@ const Services = () => {
   );
 };
 
-export default Services;
+export default services;
