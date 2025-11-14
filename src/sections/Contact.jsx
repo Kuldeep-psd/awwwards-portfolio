@@ -5,14 +5,14 @@ import { socials } from "../constants";
 import gsap from "gsap";
 
 const Contact = () => {
-  const text = `Got a question, how or project Idea?
-    WE’D love to hear from you and discus further!`;
+  const text = `Feel free to reach out if you'd like to know 
+  more about my work or just talk!`;
   const items = [
-    "just imagin, I code",
-    "just imagin, I code",
-    "just imagin, I code",
-    "just imagin, I code",
-    "just imagin, I code",
+    "© 2025 Kuldeep Singh",
+    "© 2025 Kuldeep Singh",
+    "© 2025 Kuldeep Singh",
+    "© 2025 Kuldeep Singh",
+    "© 2025 Kuldeep Singh",
   ];
   useGSAP(() => {
     gsap.from(".social-link", {

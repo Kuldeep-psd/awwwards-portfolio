@@ -1,12 +1,13 @@
 import { useMediaQuery } from "react-responsive";
 import AnimatedHeaderSection from "../components/AnimatedHeaderSection"; // Assumes components folder is at the same level
-import Prism from "../components/Prism";
+import Orb from "../components/Prism";
 import Aurora from "../components/Aurora";
 import {Planet} from "../components/Planet";
 
 const Hero = () => {
   const isMobile = useMediaQuery({ maxWidth: 853 });
-  const text = `A versatile designer that will help fix your lifedd`;
+  const text = `turning complexity into intuitive + meaningful experiences 
+  across systems, data, and interfaces`;
   return (
     <section id="home" className="flex flex-col justify-end min-h-screen">
       <AnimatedHeaderSection
@@ -20,19 +21,21 @@ const Hero = () => {
         style={{ width: "100vw", height: "100vh" }}
       >
         {/* This is the correct implementation of the Prism component */}
-        {<Prism
-          animationType="hover"
-          timeScale={0.5}
-          height={3}
-          baseWidth={3}
-          scale={3.6}
-          hueShift={1}
-          colorFrequency={0.5}
-          noise={0.1}
-          glow={1}
-          transparent={true}
-          bloom = {0.5}
-        />
+        {<div style={{ width: '100%', height: '100%', position: 'relative' }}>
+
+  <Orb
+
+    hoverIntensity={0.1}
+
+    rotateOnHover={true}
+
+    hue={300}
+
+    forceHoverState={false}
+
+  />
+
+</div>
 
           // <Aurora
 
@@ -45,7 +48,8 @@ const Hero = () => {
           //   speed={0.5}
 
           // />}
-     } </figure>
+        }
+      </figure>
     </section>
   );
 };
