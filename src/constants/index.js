@@ -4,26 +4,51 @@ export const servicesData = [
   {
     title: "Files App Redesign",
     description:
-      "A user centred redesign of the iOS Files App, Apple's mobile file management app, focusing on intuitive navigation and enhanced usability.",
-    tags: ["UX/UI Design", "Prototyping","User Research", "Information Architecture", "Double Diamond"],
-    imageUrl: "/images/project-files-app.png",
+      "A user-centred redesign of the iOS Files App, Apple's mobile file management app, focusing on intuitive navigation and enhanced usability.",
+    tags: [
+      "UX/UI Design",
+      "Prototyping",
+      "User Research",
+      "Information Architecture",
+      "Double Diamond",
+    ],
+    imageUrl: "/assets/projects/files.webp",
     caseStudyUrl: "https://www.behance.net/gallery/237448605/Files-App-Redesign",
   },
   {
     title: "Future of Currency is Alive",
+    // --- UPDATED Description ---
     description:
-      "A speculative design project exploring the future of currency and the relationship of wealth with . This project includes a scrollytelling website, physical artifacts, and a research paper.",
-    tags: ["Speculative Design", "Tangible DataViz", "Worldbuilding","Storytelling","Critical Design"],
-    imageUrl: "/images/project-currency.png",
-    caseStudyUrl: "https://petcoin.vercel.app/",
+      "A worldbuilding experiment imagining currency as a living system that shapes and is shaped by human behavior. A critical design provocation on value, care, and human communities.",
+    // --- NEW Field Added ---
+    award: "DesignUp Futures Challenge Winner 2025",
+    tags: [
+      "Speculative Design",
+      "Tangible DataViz",
+      "Worldbuilding",
+      "Storytelling",
+      "Critical Design",
+    ],
+    imageUrl: "/assets/projects/future.webp",
+    caseStudyUrl: "httpshttps://petcoin.vercel.app/",
   },
   {
     title: "Indian Public Libraries DPI",
+    // --- UPDATED Description ---
     description:
-      "A service design project to reimagine public libraries in India as digital public infrastructure, based on field research in Bengaluru and Delhi.",
-    tags: ["Service Design", "Human Centred AI", "Public Policy", "User Research", "Systems Thinking"],
-    imageUrl: "/images/project-libraries.png",
-    caseStudyUrl: "https://www.behance.net/gallery/238402507/Public-Libraries-DPI-Service-Design?lo=9beb3a64cf1e16ceb660d845f59f0f2d402fa393be812e3464edbac2e9ab24ba", 
+      "An ongoing redesign of India’s public library ecosystem as a critical piece of digital public infrastructure. Developing a user-centered service layer to make public libraries appealing, accessible and non-exclusionary.",
+    // --- NEW Field Added ---
+    status: "Work in Progress",
+    tags: [
+      "Service Design",
+      "Human Centred AI",
+      "Public Policy",
+      "User Research",
+      "Systems Thinking",
+    ],
+    imageUrl: "/assets/projects/library.webp",
+    caseStudyUrl:
+      "https://www.behance.net/gallery/238402507/Public-Libraries-DPI-Service-Design?lo=9beb3a64cf1e16ceb660d845f59f0f2d402fa393be812e3464edbac2e9ab24ba",
   },
 ];
 export const projects = [

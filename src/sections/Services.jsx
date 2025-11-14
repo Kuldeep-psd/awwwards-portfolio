@@ -33,10 +33,10 @@ const Services = () => {
     serviceRefs.current.forEach((el) => {
       if (!el) return;
 
-      // 1. The fade-in animation for the whole sticky card
+      // 1. --- ANIMATION FIX ---
+      // Removed 'opacity: 0' for the snappy slide-up animation you wanted.
       gsap.from(el, {
         y: 200,
-        opacity: 0,
         scrollTrigger: {
           trigger: el,
           start: 'top 90%',
@@ -91,11 +91,6 @@ const Services = () => {
         withScrollTrigger={true}
       />
 
-      {/* --- Projects Section --- */}
-      {/* FIX 1: Added 'pb-96' (padding-bottom) here. 
-        This gives the last sticky card enough scrollable
-        space at the end to complete its animation.
-      */}
       <div className="relative pb-96">
         {servicesData.map((service, index) => (
           <div
@@ -114,12 +109,36 @@ const Services = () => {
             <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
               {/* --- COLUMN 1: Text Content --- */}
               <div className="flex flex-col gap-8 order-2 lg:order-1">
-                <h2 className="text-4xl lg:text-5xl font-light">
-                  {service.title}
-                </h2>
+                <div className="flex flex-col gap-2">
+                  <h2 className="text-4xl lg:text-5xl font-light">
+                    {service.title}
+                  </h2>
+
+                  {/* --- NEW: "Work in Progress" Status --- */}
+                  {service.status && (
+                    <span
+                      className="text-sm font-medium tracking-wider text-pink-100 uppercase"
+                    >
+                      {service.status}
+                    </span>
+                  )}
+                </div>
+
                 <p className="text-xl leading-relaxed tracking-wide lg:text-2xl text-white/60 text-pretty">
                   {service.description}
                 </p>
+
+{/* --- NEW: "DesignUp Winner" Award --- */}
+                {service.award && (
+                  <div
+                    className="px-5 py-3 rounded-lg border border-purple-300/30 
+                               bg-purple-300/10 text-purple-300
+                               text-base lg:text-lg font-medium tracking-wide"
+                  >
+                    🏆 {service.award}
+                  </div>
+                )}
+
                 <div className="flex flex-wrap gap-3">
                   {service.tags.map((tag, tagIndex) => (
                     <span
@@ -132,23 +151,21 @@ const Services = () => {
                   ))}
                 </div>
 
-                {/* --- FIX 2: Updated Button --- */}
                 <a
                   href={service.caseStudyUrl}
+                  target="_blank" // Added this to open in a new tab
+                  rel="noopener noreferrer" // Good practice for target="_blank"
                   className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3
                              text-white border-2 border-white text-lg font-medium px-8 py-5 
-                             rounded-lg {/* <-- Sharper corners */}
+                             rounded-lg
                              overflow-hidden transition-colors duration-500 ease-out hover:text-black mt-4"
                 >
-                  {/* Fill animation now comes from the bottom */}
                   <span
                     className="absolute inset-0 bg-white transform 
-                               scale-y-0 group-hover:scale-y-100 {/* <-- Changed from scale-x */}
+                               scale-y-0 group-hover:scale-y-100
                                transition-transform duration-500 ease-out 
                                origin-bottom z-0"
                   ></span>
-
-                  {/* Text and Icon */}
                   <span className="relative z-10 flex items-center gap-3">
                     View Case Study
                     <ArrowIcon />
