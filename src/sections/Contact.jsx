@@ -8,11 +8,11 @@ const Contact = () => {
   const text = `Feel free to reach out if you'd like to know 
   more about my work or just talk!`;
   const items = [
-    "© 2025 Kuldeep Singh",
-    "© 2025 Kuldeep Singh",
-    "© 2025 Kuldeep Singh",
-    "© 2025 Kuldeep Singh",
-    "© 2025 Kuldeep Singh",
+    "© 2026 Kuldeep Singh",
+    "© 2026 Kuldeep Singh",
+    "© 2026 Kuldeep Singh",
+    "© 2026 Kuldeep Singh",
+    "© 2026 Kuldeep Singh",
   ];
   useGSAP(() => {
     gsap.from(".social-link", {

@@ -4,8 +4,8 @@ import Orb from "../components/Orb";
 
 const Hero = () => {
   const isMobile = useMediaQuery({ maxWidth: 853 });
-  const text = `turning complexity into intuitive + meaningful experiences 
-  across systems, data, and interfaces`;
+  const text = `turning complexity into intuitive + meaningful experiences
+  across systems, datA, and interfaces`;
   return (
     <section id="home" className="flex flex-col justify-end min-h-screen">
       <AnimatedHeaderSection
