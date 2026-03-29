@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-/* Amiamie Regular */
 @font-face {
   font-family: "Amiamie";
   src: url("/fonts/otf/Amiamie-Regular.otf") format("opentype"),
@@ -10,7 +9,6 @@
   font-display: swap;
 }
 
-/* Amiamie Regular Italic */
 @font-face {
   font-family: "Amiamie";
   src: url("/fonts/otf/Amiamie-Italic.otf") format("opentype"),
@@ -20,7 +18,6 @@
   font-display: swap;
 }
 
-/* Amiamie Light */
 @font-face {
   font-family: "Amiamie";
   src: url("/fonts/otf/Amiamie-Light.otf") format("opentype"),
@@ -30,7 +27,6 @@
   font-display: swap;
 }
 
-/* Amiamie Light Italic */
 @font-face {
   font-family: "Amiamie";
   src: url("/fonts/otf/Amiamie-LightItalic.otf") format("opentype"),
@@ -40,7 +36,6 @@
   font-display: swap;
 }
 
-/* Amiamie Black */
 @font-face {
   font-family: "Amiamie";
   src: url("/fonts/otf/Amiamie-Black.otf") format("opentype"),
@@ -50,7 +45,6 @@
   font-display: swap;
 }
 
-/* Amiamie Black Italic */
 @font-face {
   font-family: "Amiamie";
   src: url("/fonts/otf/Amiamie-BlackItalic.otf") format("opentype"),
@@ -60,7 +54,6 @@
   font-display: swap;
 }
 
-/* Amiamie-Round Variants (if needed separately) */
 @font-face {
   font-family: "Amiamie-Round";
   src: url("/fonts/otf/Amiamie-RegularRound.otf") format("opentype"),
@@ -94,7 +87,6 @@
   --color-gold: #cfa355;
   --font-amiamie: "Amiamie", sans-serif;
   --font-amiamie-round: "Amiamie-Round", sans-serif;
-
   --animate-marquee: marquee 40s infinite linear;
   @keyframes marquee {
     from {
@@ -103,6 +95,12 @@
     to {
       transform: translateX(calc(-100% - var(--gap)));
     }
+  }
+  --animate-shimmer: shimmer 1.5s infinite linear;
+  
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
   }
 }
 
@@ -133,4 +131,3 @@ body {
 @utility contact-text-responsive {
   @apply text-[42px] sm:text-[52px] md:text-[62px] lg:text-[100px];
 }
-
