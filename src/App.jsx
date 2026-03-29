@@ -8,6 +8,7 @@ import About from "./sections/About";
 import Works from "./sections/Works";
 import Contact from "./sections/Contact";
 import { Analytics } from "@vercel/analytics/react"
+import CustomCursor from "./components/CustomCursor";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -31,6 +32,7 @@ const App = () => {
 
   return (
     <ReactLenis root className="relative w-screen min-h-screen overflow-x-auto">
+      <CustomCursor />
       {/* LOADER OVERLAY */}
       {/* The 'pointer-events-none' ensures that once opacity is 0, we can click through it instantly */}
       <div

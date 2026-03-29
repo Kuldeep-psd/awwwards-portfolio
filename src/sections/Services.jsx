@@ -4,6 +4,7 @@ import { servicesData } from '../constants';
 import { useMediaQuery } from 'react-responsive';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
+import ShinyText from '../components/ShinyText';
 
 // Icon for the button
 const ArrowIcon = () => (
@@ -21,8 +22,10 @@ const ArrowIcon = () => (
   </svg>
 );
 
-// --- COMPONENT NAME FIX ---
-const Projects = () => {
+const STACK_TOP_VH = 10;
+const STACK_STEP_REM = 6;
+
+const Services = () => {
   const text = `A look at how I explore ideas, 
   learn from people, and shape them into 
   thoughtful design.`;
@@ -86,23 +89,21 @@ const Projects = () => {
         {servicesData.map((service, index) => (
           <div
             ref={(el) => (serviceRefs.current[index] = el)}
-            key={index}
-            className="sticky px-6 md:px-10 pt-10 pb-16 text-white bg-black border-t-2 border-white/30"
+            key={service.title}
+            className="sticky px-6 md:px-10 pt-10 pb-16 text-white bg-black border-t-2 border-white/30 lg:h-[72vh]"
             style={
               isDesktop
                 ? {
-                    top: `calc(10vh + ${index * 6}em)`,
-                    marginBottom: `${(servicesData.length - index - 1) * 6}rem`,
+                    top: `calc(${STACK_TOP_VH}vh + ${index * STACK_STEP_REM}rem)`,
+                    marginBottom: `${(servicesData.length - index - 1) * STACK_STEP_REM}rem`,
+                    zIndex: index + 1,
                   }
                 : { top: 0 }
             }
           >
-            <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
-              {/* --- COLUMN 1: Text Content --- */}
-              <div className="flex flex-col gap-8 order-2 lg:order-1">
+            <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center lg:h-full">
+              <div className="flex flex-col gap-8 order-2 lg:order-1 lg:h-full lg:justify-between">
                 
-                {/* --- MOBILE: ITEM 1 --- */}
-                {/* --- DESKTOP: ITEM 1 --- */}
                 <div className="flex flex-col gap-2">
                   <h2 className="text-4xl lg:text-5xl font-light">
                     {service.title}
@@ -114,17 +115,14 @@ const Projects = () => {
                   )}
                 </div>
 
-                {/* --- MOBILE: ITEM 2 (Moved Up) --- */}
-                {/* --- DESKTOP: ITEM 4 (Button is second-to-last) --- */}
                 <a
                   href={service.caseStudyUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group relative w-full sm:w-auto inline-flex items-center justify-center gap-3
                              text-white border-2 border-white text-lg font-medium px-8 py-5 
-                             rounded-lg
-                             overflow-hidden transition-colors duration-500 ease-out hover:text-black mt-4
-                             lg:order-4" // <-- DESKTOP ORDER
+                             rounded-lg overflow-hidden transition-colors duration-500 ease-out hover:text-black mt-4
+                             lg:order-4"
                 >
                   <span
                     className="absolute inset-0 bg-white transform 
@@ -138,34 +136,40 @@ const Projects = () => {
                   </span>
                 </a>
 
-                {/* --- MOBILE: ITEM 3 --- */}
-                {/* --- DESKTOP: ITEM 2 --- */}
                 <p className="text-xl leading-relaxed tracking-wide lg:text-2xl text-white/60 text-pretty lg:order-2"> {/* <-- DESKTOP ORDER */}
                   {service.description}
                 </p>
 
-                {/* --- MOBILE: ITEM 4 --- */}
-                {/* --- DESKTOP: ITEM 3 (Award is first, after description) --- */}
                 {service.award && (
                   <div
-                    className="px-5 py-3 rounded-lg border border-purple-300/30 
-                               bg-purple-300/10 text-purple-300
+                    className="relative px-5 py-3 rounded-xl border border-amber-300/40
+                               bg-gradient-to-r from-amber-300/10 via-yellow-200/10 to-amber-300/10
+                               shadow-[0_0_30px_rgba(251,191,36,0.12)]
                                text-base lg:text-lg font-medium tracking-wide
-                               lg:order-3" // <-- DESKTOP ORDER
+                               lg:order-3"
                   >
-                    🏆 {service.award}
+                    <span className="mr-2 text-lg" aria-hidden="true">🏆</span>
+                    <ShinyText
+                      text={service.award}
+                      className="font-semibold"
+                      speed={2.8}
+                      spread={110}
+                      color="#d6b26e"
+                      shineColor="#fff7dc"
+                      yoyo
+                      delay={0.2}
+                      pauseOnHover
+                    />
                   </div>
                 )}
 
-                {/* --- MOBILE: ITEM 5 --- */}
-                {/* --- DESKTOP: ITEM 5 (Tags are last) --- */}
                 <div
                   className="flex flex-wrap gap-3
-                             lg:order-5" // <-- DESKTOP ORDER
+                             lg:order-5"
                 >
-                  {service.tags.map((tag, tagIndex) => (
+                  {service.tags.map((tag) => (
                     <span
-                      key={tagIndex}
+                      key={`${service.title}-${tag}`}
                       className="px-4 py-2 text-sm font-medium tracking-wider text-white/70 uppercase
                                  bg-white/5 border border-white/10 rounded-full"
                     >
@@ -176,16 +180,20 @@ const Projects = () => {
                 
               </div>
 
-              {/* --- COLUMN 2: Image --- */}
-              <div className="order-1 lg:order-2">
-                <div className="overflow-hidden rounded-2xl image-container">
+              <div className="order-1 lg:order-2 lg:h-full">
+                <a
+                  href={service.caseStudyUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block overflow-hidden rounded-2xl image-container group lg:h-full"
+                >
                   <img
                     src={service.imageUrl}
                     alt={service.title}
-                    className="w-full h-auto object-cover project-image"
+                    className="w-full h-auto object-cover project-image transition-transform duration-500 ease-out group-hover:scale-[1.04] lg:h-full"
                     style={{ minHeight: '300px' }}
                   />
-                </div>
+                </a>
               </div>
             </div>
           </div>
@@ -195,5 +203,4 @@ const Projects = () => {
   );
 };
 
-// --- COMPONENT NAME FIX ---
-export default Projects;
+export default Services;

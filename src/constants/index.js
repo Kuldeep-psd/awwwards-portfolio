@@ -2,6 +2,21 @@
 
 export const servicesData = [
   {
+    title: "Indian Public Libraries DPI",
+    description:
+      "An ongoing redesign of India’s public library ecosystem as a critical piece of digital public infrastructure. Developing a user-centered service layer to make public libraries appealing, accessible and non-exclusionary.",
+    tags: [
+      "Service Design",
+      "Human Centred AI",
+      "Public Policy",
+      "User Research",
+      "Systems Thinking",
+    ],
+    imageUrl: "/assets/projects/library.webp",
+    caseStudyUrl:
+      "https://www.behance.net/gallery/238402507/Public-Libraries-DPI-Service-Design?lo=9beb3a64cf1e16ceb660d845f59f0f2d402fa393be812e3464edbac2e9ab24ba",
+  },
+  {
     title: "Files App Redesign",
     description:
       "A user-centred redesign of the iOS Files App, Apple's mobile file management app, focusing on intuitive navigation and enhanced usability.",
@@ -31,24 +46,6 @@ export const servicesData = [
     ],
     imageUrl: "/assets/projects/future.webp",
     caseStudyUrl: "https://petcoin.vercel.app/",
-  },
-  {
-    title: "Indian Public Libraries DPI",
-    // --- UPDATED Description ---
-    description:
-      "An ongoing redesign of India’s public library ecosystem as a critical piece of digital public infrastructure. Developing a user-centered service layer to make public libraries appealing, accessible and non-exclusionary.",
-    // --- NEW Field Added ---
-    status: "Work in Progress",
-    tags: [
-      "Service Design",
-      "Human Centred AI",
-      "Public Policy",
-      "User Research",
-      "Systems Thinking",
-    ],
-    imageUrl: "/assets/projects/library.webp",
-    caseStudyUrl:
-      "https://www.behance.net/gallery/238402507/Public-Libraries-DPI-Service-Design?lo=9beb3a64cf1e16ceb660d845f59f0f2d402fa393be812e3464edbac2e9ab24ba",
   },
 ];
 export const projects = [
