@@ -1,36 +1,62 @@
-import { useRef } from "react";
 import AnimatedHeaderSection from "../components/AnimatedHeaderSection";
 import { AnimatedTextLines } from "../components/AnimatedTextLines";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useState } from "react";
 
 // A simple inline SVG for the download icon
 const DownloadIcon = () => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 20 20"
-    fill="currentColor"
-    className="w-5 h-5 transition-transform duration-300 group-hover:translate-y-0.5"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className="w-4 h-4 transition-transform duration-300 ease-out group-hover:translate-y-[1px]"
   >
-    <path
-      fillRule="evenodd"
-      d="M10 18a8 8 0 100-16 8 8 0 000 16zm.75-11.25a.75.75 0 00-1.5 0v5.69l-1.97-1.97a.75.75 0 00-1.06 1.06l3.5 3.5a.75.75 0 001.06 0l3.5-3.5a.75.75 0 10-1.06-1.06l-1.97 1.97V6.75z"
-      clipRule="evenodd"
-    />
+    <path d="M12 4v12" />
+    <path d="m7 11 5 5 5-5" />
+    <path d="M5 20h14" />
   </svg>
 );
 
-const About = () => {
-  const headerText = `I am Kuldeep, an information designer who loves exploring 
-  ideas and understanding people.`;
+const CredentialItem = ({ icon, logoSrc, logoAlt, title, subtitle, invertLogo = false }) => {
+  const [hasError, setHasError] = useState(false);
 
-  const aboutText = `My work is driven by a practice of active synthesis—applying systems logic, artistic craft, and creative technology to human-centered problems. I enjoy digging into messy problems and shaping ideas into experiences that feel intuitive and honest.`;
+  return (
+    <div className="flex items-center gap-5">
+      {logoSrc && !hasError ? (
+        <img
+          src={logoSrc}
+          alt={logoAlt}
+          className={`h-10 w-auto object-contain ${invertLogo ? "invert" : ""}`}
+          onError={() => setHasError(true)}
+        />
+      ) : (
+        <div className="flex items-center justify-center w-10 h-10 text-xs font-semibold text-white border rounded-full border-white/30">
+          {icon}
+        </div>
+      )}
+      <div>
+        <h4 className="text-lg md:text-xl font-medium text-white">{title}</h4>
+        <p className="text-lg md:text-xl font-light">{subtitle}</p>
+      </div>
+    </div>
+  );
+};
+
+const About = () => {
+  const headerText = `I am Kuldeep, an Information Designer bridging the gap between complex data and human-centered experiences.`;
+
+  const aboutText = `My practice is built on active synthesis, combining systems logic, creative technology, and user research to solve complex, human-centered problems. I thrive on untangling messy constraints and shaping them into digital experiences that feel intuitive, scalable, and honest.`;
 
   const interests = [
     "📝 Reading or breaking apart ideas",
     "🔍 Playing with data, visuals, & code",
-    "🌆 Taking the road less taken in new cities",
-    "🎧 Exploring films, music, & anything beautifully made",
+    "🌆 Solo traveling and finding the quiet corners of new cities",
+    "🎧 Logging world cinema on Letterboxd",
   ];
 
   useGSAP(() => {
@@ -63,53 +89,48 @@ const About = () => {
           
           {/* Experience & Education Section */}
           <div className="space-y-10">
-            {/* Deloitte */}
-            <div className="flex items-center gap-5">
-              <img 
-                src="/images/deloitte-logo.png" 
-                alt="Deloitte" 
-                className="h-10 w-auto" // Adjusted for prominent horizontal logo
-              />
-              <div>
-                <h4 className="text-lg md:text-xl font-medium text-white">
-                  Customer Strategy & Design
-                </h4>
-                <p className="text-lg md:text-xl font-light">Deloitte India</p>
-              </div>
-            </div>
-            
-            {/* DTU */}
-            <div className="flex items-center gap-5">
-              <img 
-                src="/images/dtu-logo.png" 
-                alt="DTU" 
-                className="w-14 h-auto" // Adjusted for prominent square/circular logo
-              />
-              <div>
-                <h4 className="text-lg md:text-xl font-medium text-white">
-                  B.Tech, Computer Science
-                </h4>
-                <p className="text-lg md:text-xl font-light">
-                  Delhi Technological University
-                </p>
-              </div>
-            </div>
+            <CredentialItem
+              icon="💼"
+              logoSrc="/images/deloitte-logo.png"
+              logoAlt="Deloitte"
+              title="Customer Strategy & Design"
+              subtitle="Deloitte India"
+            />
+            <CredentialItem
+              icon="NID"
+              logoSrc="/images/nid-logo.png"
+              logoAlt="NID Bengaluru"
+              title="M.Des, Information Design"
+              subtitle="NID Bengaluru"
+              invertLogo={true}
+            />
+            <CredentialItem
+              icon="🎓"
+              logoSrc="/images/dtu-logo.png"
+              logoAlt="DTU"
+              title="B.Tech, Computer Science"
+              subtitle="DTU"
+            />
           </div>
 
           {/* Resume Button - Outline style with fill on hover */}
           <a
             href="/resume/KuldeepSingh_Resume.pdf" 
             download="KuldeepSingh_Resume.pdf"
-            className="group relative w-full lg:w-auto inline-flex items-center justify-center gap-3
-                       text-white border-1 border-white text-lg font-medium px-8 py-5 rounded-full
-                       overflow-hidden transition-colors duration-500 ease-out hover:text-black"
+            className="group relative w-full lg:w-auto inline-flex items-center justify-center
+                       text-black bg-white border border-white/70
+                       text-base md:text-lg font-medium tracking-normal
+                       pl-7 pr-14 py-4 rounded-full overflow-hidden
+                       transition-all duration-300 ease-out
+                       hover:text-white hover:shadow-[0_12px_30px_rgba(255,255,255,0.2)]"
           >
-            {/* Background fill on hover */}
-            <span className="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100
-                             transition-transform duration-500 ease-out origin-left z-0"></span>
+            <span
+              className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100
+                             transition-transform duration-500 ease-out origin-left z-0"
+            ></span>
             
-            <span className="relative z-10 flex items-center gap-3">
-              Download Resume
+            <span className="relative z-10 leading-none">Download Resume</span>
+            <span className="absolute right-5 top-1/2 -translate-y-1/2 z-10">
               <DownloadIcon />
             </span>
           </a>
@@ -119,14 +140,12 @@ const About = () => {
         <div className="flex flex-col gap-12 lg:col-span-3 order-1 lg:order-2"> {/* order-1 makes it first on mobile, order-2 makes it second on desktop */}
           <AnimatedTextLines
             text={aboutText}
-            className={
-              "text-xl md:text-2xl lg:text-3xl font-light tracking-wide"
-            }
+            className={"text-lg md:text-xl lg:text-2xl font-light tracking-wide"}
           />
 
           <div>
             <h3 className="text-sm uppercase tracking-widest text-white/40 mb-6 font-medium">
-              When I'm not designing
+              When I'm not designing:
             </h3>
             <ul className="text-lg md:text-xl font-light space-y-3">
               {interests.map((item, index) => (

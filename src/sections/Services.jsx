@@ -126,9 +126,9 @@ const Services = () => {
                 >
                   <span
                     className="absolute inset-0 bg-white transform 
-                               scale-y-0 group-hover:scale-y-100
+                               scale-x-0 group-hover:scale-x-100
                                transition-transform duration-500 ease-out 
-                               origin-bottom z-0"
+                               origin-left z-0"
                   ></span>
                   <span className="relative z-10 flex items-center gap-3">
                     View Case Study
@@ -136,7 +136,7 @@ const Services = () => {
                   </span>
                 </a>
 
-                <p className="text-xl leading-relaxed tracking-wide lg:text-2xl text-white/60 text-pretty lg:order-2"> {/* <-- DESKTOP ORDER */}
+                <p className="text-lg leading-relaxed tracking-wide lg:text-xl text-white/60 text-pretty lg:order-2"> {/* <-- DESKTOP ORDER */}
                   {service.description}
                 </p>
 
@@ -187,12 +187,14 @@ const Services = () => {
                   rel="noopener noreferrer"
                   className="block overflow-hidden rounded-2xl image-container group lg:h-full"
                 >
-                  <img
-                    src={service.imageUrl}
-                    alt={service.title}
-                    className="w-full h-auto object-cover project-image transition-transform duration-500 ease-out group-hover:scale-[1.04] lg:h-full"
-                    style={{ minHeight: '300px' }}
-                  />
+                  <div className="transition-transform duration-500 ease-out group-hover:scale-[1.04] lg:h-full">
+                    <img
+                      src={service.imageUrl}
+                      alt={service.title}
+                      className="w-full h-auto object-cover project-image lg:h-full"
+                      style={{ minHeight: '300px' }}
+                    />
+                  </div>
                 </a>
               </div>
             </div>

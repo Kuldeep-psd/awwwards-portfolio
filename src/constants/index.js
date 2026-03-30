@@ -2,9 +2,9 @@
 
 export const servicesData = [
   {
-    title: "Indian Public Libraries DPI",
+    title: "Rajgruha: Service Design",
     description:
-      "An ongoing redesign of India’s public library ecosystem as a critical piece of digital public infrastructure. Developing a user-centered service layer to make public libraries appealing, accessible and non-exclusionary.",
+      "Designed a centralized digital platform functioning as a Digital Public Infrastructure (DPI) to modernize India's public library ecosystem. Engineered a seamless service layer that uncovers hidden physical resources, maximizing the utilization and accessibility of existing assets at scale.",
     tags: [
       "Service Design",
       "Human Centred AI",
@@ -17,9 +17,9 @@ export const servicesData = [
       "https://www.behance.net/gallery/238402507/Public-Libraries-DPI-Service-Design?lo=9beb3a64cf1e16ceb660d845f59f0f2d402fa393be812e3464edbac2e9ab24ba",
   },
   {
-    title: "Files App Redesign",
+    title: "iOS Files App Redesign",
     description:
-      "A user-centred redesign of the iOS Files App, Apple's mobile file management app, focusing on intuitive navigation and enhanced usability.",
+      "A UX-driven redesign aimed at eliminating user frustration and reducing reliance on external workarounds. Reimagined Apple's mobile file management to bridge the usability gap within Apple ecosystem, prioritizing intuitive navigation and information architecture to drive daily product adoption.",
     tags: [
       "UX/UI Design",
       "Prototyping",
@@ -34,7 +34,7 @@ export const servicesData = [
     title: "Future of Currency is Alive",
     // --- UPDATED Description ---
     description:
-      "A worldbuilding experiment imagining currency as a living system that shapes and is shaped by human behavior. A critical design provocation on value, care, and human communities.",
+      "A speculative design project exploring alternative economic incentives through future-casting. Architected a self-depreciating currency model designed to influence user behavior, discourage resource hoarding, and align systemic value with sustainable practices.",
     // --- NEW Field Added ---
     award: "DesignUp Futures Challenge Winner 2025",
     tags: [

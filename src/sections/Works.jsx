@@ -149,7 +149,6 @@ const Works = () => {
                 </p>
               ))}
             </div>
-            {/* mobile preview image */}
             <div className="relative flex items-center justify-center px-10 md:hidden h-[400px]">
               <img
                 src={project.bgImage}
@@ -165,7 +164,6 @@ const Works = () => {
           </a>
       
         ))}
-        {/* desktop Flaoting preview image */}
         <div
           ref={previewRef}
           className="fixed -top-2/6 left-0 z-50 overflow-hidden border-8 border-black pointer-events-none w-[960px] md:block hidden opacity-0"
