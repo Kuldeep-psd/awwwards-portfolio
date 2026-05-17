@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
+import { motion, useMotionValue } from 'framer-motion';
 
-const INTERACTIVE_SELECTOR =
+  const INTERACTIVE_SELECTOR =
   'a, button, [role="button"], input, textarea, select, summary, label[for], .cursor-pointer';
 
 const CustomCursor = () => {
   const x = useMotionValue(-100);
   const y = useMotionValue(-100);
-  const smoothX = useSpring(x, { stiffness: 700, damping: 45, mass: 0.2 });
-  const smoothY = useSpring(y, { stiffness: 700, damping: 45, mass: 0.2 });
 
   const [enabled, setEnabled] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -69,8 +67,8 @@ const CustomCursor = () => {
       aria-hidden="true"
       className="fixed top-0 left-0 z-[1001] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2"
       style={{
-        left: smoothX,
-        top: smoothY,
+        left: x,
+        top: y,
         mixBlendMode: 'difference',
         backgroundColor: '#ffffff',
       }}
