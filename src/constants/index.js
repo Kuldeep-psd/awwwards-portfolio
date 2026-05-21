@@ -84,6 +84,18 @@ export const projects = [
     frameworks: [
       { id: 1, name: "Data Visualization" }
     ]
+  },
+    {
+    id: 4,
+    name: "Two Speeds of Bengaluru",
+    description:
+      "Silicon speed vs physical gridlock. A speculative analysis of the city's infrastructure. ",
+    href: "https://bengaluru-pcb.vercel.app/",
+    image: "/assets/projects/pcb.webp",
+    bgImage: "/assets/backgrounds/poster.jpg",
+    frameworks: [
+      { id: 1, name: "Metaphor Visualization" }
+    ]
   }
 
 ];
