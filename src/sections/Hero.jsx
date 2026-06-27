@@ -1,9 +1,7 @@
-import { useMediaQuery } from "react-responsive";
 import AnimatedHeaderSection from "../components/AnimatedHeaderSection"; // Assumes components folder is at the same level
 import Orb from "../components/Orb";
 
 const Hero = () => {
-  const isMobile = useMediaQuery({ maxWidth: 853 });
   const text = `turning complexity into intuitive + meaningful experiences
   across systems, datA, and interfaces`;
   return (

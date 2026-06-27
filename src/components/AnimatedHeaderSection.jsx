@@ -5,6 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
 const animatedWords = ["Des", "Art", "Systems", "Tech"];
+const MotionSpan = motion.span;
 
 const AnimatedHeaderSection = ({
   subTitle,
@@ -79,7 +80,7 @@ const AnimatedHeaderSection = ({
                   
                   <span style={{ display: "inline-block", minWidth: "2.2em", textAlign: "left", perspective: '300px' }}>
                     <AnimatePresence mode="wait">
-                      <motion.span
+                      <MotionSpan
                         key={currentWord}
                         initial={{ opacity: 0, y: 15 }}
                         animate={{ opacity: 1, y: 0 }}
@@ -88,7 +89,7 @@ const AnimatedHeaderSection = ({
                         style={{ display: "inline-block" }}
                       >
                         {currentWord}
-                      </motion.span>
+                      </MotionSpan>
                     </AnimatePresence>
                   </span>
                 </>

@@ -9,6 +9,7 @@ import Works from "./sections/Works";
 import Contact from "./sections/Contact";
 import { Analytics } from "@vercel/analytics/react"
 import CustomCursor from "./components/CustomCursor";
+import KulLLM from "./components/KulLLM";
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -66,6 +67,8 @@ const App = () => {
         <About />
         <Works />
         <Contact />
+        <KulLLM />
+        <Analytics />
       </div>
     </ReactLenis>
   );

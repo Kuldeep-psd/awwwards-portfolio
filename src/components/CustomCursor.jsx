@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { motion, useMotionValue } from 'framer-motion';
 
-  const INTERACTIVE_SELECTOR =
+const INTERACTIVE_SELECTOR =
   'a, button, [role="button"], input, textarea, select, summary, label[for], .cursor-pointer';
+const MotionDiv = motion.div;
 
 const CustomCursor = () => {
   const x = useMotionValue(-100);
@@ -63,7 +64,7 @@ const CustomCursor = () => {
   if (!enabled) return null;
 
   return (
-    <motion.div
+    <MotionDiv
       aria-hidden="true"
       className="fixed top-0 left-0 z-[1001] rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2"
       style={{

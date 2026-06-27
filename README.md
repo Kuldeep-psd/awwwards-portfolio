@@ -55,6 +55,19 @@ npm run dev
 
 > Open http://localhost:5173 in your browser.
 
+## Kul LLM Setup
+
+Kul LLM uses a serverless API route at `/api/kul-llm` so the Gemini key never ships to the browser.
+
+For local serverless testing, create `.env.local`:
+
+```bash
+GOOGLE_AI_STUDIO_API_KEY=your_google_ai_studio_key_here
+GEMINI_MODEL=gemini-2.5-flash
+```
+
+For production, add the same variables in your deployment provider's environment settings. On Vercel, add `GOOGLE_AI_STUDIO_API_KEY` and redeploy.
+
 ---
 
 ## 🛠️ Customization Tips

@@ -1,6 +1,8 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { motion, useMotionValue, useAnimationFrame, useTransform } from 'framer-motion';
 
+const MotionSpan = motion.span;
+
 const ShinyText = ({
   text,
   disabled = false,
@@ -93,14 +95,14 @@ const ShinyText = ({
   };
 
   return (
-    <motion.span
+    <MotionSpan
       className={`inline-block ${className}`}
       style={{ ...gradientStyle, backgroundPosition }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
       {text}
-    </motion.span>
+    </MotionSpan>
   );
 };
 
