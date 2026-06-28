@@ -228,7 +228,10 @@ const logConversation = async ({
 }) => {
   const webhookUrl = process.env.KUL_LLM_LOG_WEBHOOK_URL;
 
-  if (!webhookUrl) return;
+  if (!webhookUrl) {
+    console.warn("Kul LLM logging skipped: KUL_LLM_LOG_WEBHOOK_URL is not set.");
+    return;
+  }
 
   const safeMessages = getSafeMessages(messages);
   const latestQuestion =
@@ -238,7 +241,7 @@ const logConversation = async ({
   const timeout = setTimeout(() => controller.abort(), LOG_TIMEOUT_MS);
 
   try {
-    await fetch(webhookUrl, {
+    const logResponse = await fetch(webhookUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       signal: controller.signal,
@@ -256,7 +259,17 @@ const logConversation = async ({
         error,
       }),
     });
-  } catch {
+
+    if (!logResponse.ok) {
+      const responseText = await logResponse.text().catch(() => "");
+      console.warn("Kul LLM logging failed:", {
+        status: logResponse.status,
+        statusText: logResponse.statusText,
+        response: responseText.slice(0, 500),
+      });
+    }
+  } catch (logError) {
+    console.warn("Kul LLM logging failed:", logError?.message || logError);
     // Logging should never stop the chatbot from answering.
   } finally {
     clearTimeout(timeout);

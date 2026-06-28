@@ -134,6 +134,67 @@ body {
   background: rgba(255, 255, 255, 0.34);
 }
 
+.kul-llm-thinking::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.08),
+    transparent
+  );
+  transform: translateX(-120%);
+  animation: kul-llm-thinking-scan 1.8s ease-in-out infinite;
+}
+
+.kul-llm-thinking-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.62);
+  animation: kul-llm-thinking-pulse 1.2s ease-in-out infinite;
+}
+
+.kul-llm-thinking-dot:nth-child(2) {
+  animation-delay: 0.16s;
+}
+
+.kul-llm-thinking-dot:nth-child(3) {
+  animation-delay: 0.32s;
+}
+
+@keyframes kul-llm-thinking-scan {
+  0% {
+    transform: translateX(-120%);
+  }
+
+  48%,
+  100% {
+    transform: translateX(120%);
+  }
+}
+
+@keyframes kul-llm-thinking-pulse {
+  0%,
+  100% {
+    opacity: 0.22;
+    transform: translateY(0);
+  }
+
+  40% {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kul-llm-thinking::before,
+  .kul-llm-thinking-dot {
+    animation: none;
+  }
+}
+
 @utility clip-path {
   clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
 }

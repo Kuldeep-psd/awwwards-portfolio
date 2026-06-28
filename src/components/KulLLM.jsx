@@ -51,6 +51,21 @@ const MessageText = ({ content, light = false }) => {
   );
 };
 
+const LoadingMessage = () => (
+  <div className="space-y-3" aria-live="polite" aria-label="Kul LLM is replying">
+    <p className="text-[10px] font-light uppercase tracking-[0.32em] text-white/30">
+      Kul LLM
+    </p>
+    <div className="kul-llm-thinking relative grid h-10 w-20 place-items-center overflow-hidden border border-white/12">
+      <div className="flex items-center gap-1.5" aria-hidden="true">
+        <span className="kul-llm-thinking-dot" />
+        <span className="kul-llm-thinking-dot" />
+        <span className="kul-llm-thinking-dot" />
+      </div>
+    </div>
+  </div>
+);
+
 const KulLLM = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState(initialMessages);
@@ -349,16 +364,7 @@ const KulLLM = () => {
                   </div>
                 </div>
               ))}
-              {isLoading && (
-                <div className="space-y-3">
-                  <p className="text-[10px] font-light uppercase tracking-[0.32em] text-white/30">
-                    Kul LLM
-                  </p>
-                  <div className="border border-white/15 px-4 py-3 text-sm font-light text-white/55">
-                    Thinking...
-                  </div>
-                </div>
-              )}
+              {isLoading && <LoadingMessage />}
               {error && (
                 <p className="border border-red-400/30 bg-red-500/10 px-4 py-3 text-sm text-red-200">
                   {error}
