@@ -65,15 +65,11 @@ For local serverless testing, create `.env.local`:
 GOOGLE_AI_STUDIO_API_KEY=your_google_ai_studio_key_here
 GEMINI_MODEL=gemini-2.5-flash-lite
 KUL_LLM_LOG_WEBHOOK_URL=your_google_apps_script_web_app_url
-KUL_LLM_RATE_LIMIT_MAX=40
-KUL_LLM_RATE_LIMIT_WINDOW_SECONDS=60
 ```
 
 For production, add the same variables in your deployment provider's environment settings. On Vercel, add `GOOGLE_AI_STUDIO_API_KEY` and redeploy.
 
 `KUL_LLM_LOG_WEBHOOK_URL` is optional. When it is present, each Kul LLM exchange is logged to that webhook.
-
-`KUL_LLM_RATE_LIMIT_MAX` and `KUL_LLM_RATE_LIMIT_WINDOW_SECONDS` are optional. By default, one visitor can send 40 requests every 60 seconds.
 
 ### Google Sheets logging
 

@@ -2,26 +2,10 @@
 
 import crypto from "node:crypto";
 
-const DEFAULT_MAX_REQUESTS_PER_WINDOW = 40;
 const REQUEST_TIMEOUT_MS = 12 * 1000;
 const LOG_TIMEOUT_MS = 2 * 1000;
 const MAX_MESSAGES = 10;
 const MAX_MESSAGE_CHARS = 1200;
-const rateLimitStore = new Map();
-
-const getPositiveNumber = (value, fallback) => {
-  const number = Number(value);
-  return Number.isFinite(number) && number > 0 ? number : fallback;
-};
-
-const getRateLimitConfig = () => ({
-  maxRequests: getPositiveNumber(
-    process.env.KUL_LLM_RATE_LIMIT_MAX,
-    DEFAULT_MAX_REQUESTS_PER_WINDOW
-  ),
-  windowMs:
-    getPositiveNumber(process.env.KUL_LLM_RATE_LIMIT_WINDOW_SECONDS, 60) * 1000,
-});
 
 const portfolioContext = `
 Kuldeep Singh is an Information Designer focused on turning complexity into intuitive and meaningful experiences across systems, data, and interfaces.
@@ -130,26 +114,6 @@ const getClientId = (request) => {
 
 const hashValue = (value) =>
   crypto.createHash("sha256").update(value).digest("hex").slice(0, 24);
-
-const isRateLimited = (clientId) => {
-  const now = Date.now();
-  const existing = rateLimitStore.get(clientId);
-  const { maxRequests, windowMs } = getRateLimitConfig();
-
-  for (const [storedClientId, value] of rateLimitStore) {
-    if (now > value.resetAt) {
-      rateLimitStore.delete(storedClientId);
-    }
-  }
-
-  if (!existing || now > existing.resetAt) {
-    rateLimitStore.set(clientId, { count: 1, resetAt: now + windowMs });
-    return false;
-  }
-
-  existing.count += 1;
-  return existing.count > maxRequests;
-};
 
 const setJsonHeaders = (response) => {
   response.setHeader("Cache-Control", "no-store");
@@ -286,12 +250,6 @@ export default async function handler(request, response) {
   }
 
   const clientId = getClientId(request);
-
-  if (isRateLimited(clientId)) {
-    return response.status(429).json({
-      error: "Too many questions at once. Please wait a minute and try again.",
-    });
-  }
 
   const apiKey =
     process.env.GOOGLE_AI_STUDIO_API_KEY || process.env.GEMINI_API_KEY;
