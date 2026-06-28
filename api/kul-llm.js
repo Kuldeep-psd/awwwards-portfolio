@@ -1,11 +1,27 @@
 /* global process */
 
-const WINDOW_MS = 60 * 1000;
-const MAX_REQUESTS_PER_WINDOW = 12;
+import crypto from "node:crypto";
+
+const DEFAULT_MAX_REQUESTS_PER_WINDOW = 40;
 const REQUEST_TIMEOUT_MS = 12 * 1000;
+const LOG_TIMEOUT_MS = 2 * 1000;
 const MAX_MESSAGES = 10;
 const MAX_MESSAGE_CHARS = 1200;
 const rateLimitStore = new Map();
+
+const getPositiveNumber = (value, fallback) => {
+  const number = Number(value);
+  return Number.isFinite(number) && number > 0 ? number : fallback;
+};
+
+const getRateLimitConfig = () => ({
+  maxRequests: getPositiveNumber(
+    process.env.KUL_LLM_RATE_LIMIT_MAX,
+    DEFAULT_MAX_REQUESTS_PER_WINDOW
+  ),
+  windowMs:
+    getPositiveNumber(process.env.KUL_LLM_RATE_LIMIT_WINDOW_SECONDS, 60) * 1000,
+});
 
 const portfolioContext = `
 Kuldeep Singh is an Information Designer focused on turning complexity into intuitive and meaningful experiences across systems, data, and interfaces.
@@ -112,9 +128,13 @@ const getClientId = (request) => {
   );
 };
 
+const hashValue = (value) =>
+  crypto.createHash("sha256").update(value).digest("hex").slice(0, 24);
+
 const isRateLimited = (clientId) => {
   const now = Date.now();
   const existing = rateLimitStore.get(clientId);
+  const { maxRequests, windowMs } = getRateLimitConfig();
 
   for (const [storedClientId, value] of rateLimitStore) {
     if (now > value.resetAt) {
@@ -123,12 +143,12 @@ const isRateLimited = (clientId) => {
   }
 
   if (!existing || now > existing.resetAt) {
-    rateLimitStore.set(clientId, { count: 1, resetAt: now + WINDOW_MS });
+    rateLimitStore.set(clientId, { count: 1, resetAt: now + windowMs });
     return false;
   }
 
   existing.count += 1;
-  return existing.count > MAX_REQUESTS_PER_WINDOW;
+  return existing.count > maxRequests;
 };
 
 const setJsonHeaders = (response) => {
@@ -180,7 +200,71 @@ const parseModelOutput = (text) => {
   }
 };
 
+const getSafeMessages = (messages = []) =>
+  messages
+    .filter(
+      (message) =>
+        message &&
+        ["user", "assistant"].includes(message.role) &&
+        typeof message.content === "string" &&
+        message.content.trim()
+    )
+    .slice(-MAX_MESSAGES)
+    .map((message) => ({
+      role: message.role,
+      content: message.content.trim().slice(0, MAX_MESSAGE_CHARS),
+    }));
+
+const logConversation = async ({
+  request,
+  clientId,
+  model,
+  messages,
+  answer = "",
+  suggestions = [],
+  status = "success",
+  error = "",
+  startedAt,
+}) => {
+  const webhookUrl = process.env.KUL_LLM_LOG_WEBHOOK_URL;
+
+  if (!webhookUrl) return;
+
+  const safeMessages = getSafeMessages(messages);
+  const latestQuestion =
+    [...safeMessages].reverse().find((message) => message.role === "user")
+      ?.content || "";
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), LOG_TIMEOUT_MS);
+
+  try {
+    await fetch(webhookUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      signal: controller.signal,
+      body: JSON.stringify({
+        timestamp: new Date().toISOString(),
+        status,
+        model,
+        latestQuestion,
+        answer,
+        suggestions,
+        messages: safeMessages,
+        clientIdHash: hashValue(clientId),
+        userAgent: request.headers["user-agent"] || "",
+        durationMs: Date.now() - startedAt,
+        error,
+      }),
+    });
+  } catch {
+    // Logging should never stop the chatbot from answering.
+  } finally {
+    clearTimeout(timeout);
+  }
+};
+
 export default async function handler(request, response) {
+  const startedAt = Date.now();
   setJsonHeaders(response);
 
   if (request.method !== "POST") {
@@ -188,7 +272,9 @@ export default async function handler(request, response) {
     return response.status(405).json({ error: "Method not allowed" });
   }
 
-  if (isRateLimited(getClientId(request))) {
+  const clientId = getClientId(request);
+
+  if (isRateLimited(clientId)) {
     return response.status(429).json({
       error: "Too many questions at once. Please wait a minute and try again.",
     });
@@ -214,7 +300,7 @@ export default async function handler(request, response) {
     return response.status(400).json({ error: "A message is required." });
   }
 
-  const model = process.env.GEMINI_MODEL || "gemini-2.5-flash";
+  const model = process.env.GEMINI_MODEL || "gemini-2.5-flash-lite";
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
   try {
@@ -256,12 +342,32 @@ export default async function handler(request, response) {
         .trim() || "";
     const parsedOutput = parseModelOutput(answer);
 
+    await logConversation({
+      request,
+      clientId,
+      model,
+      messages: request.body.messages,
+      answer: parsedOutput.answer,
+      suggestions: parsedOutput.suggestions,
+      startedAt,
+    });
+
     return response.status(200).json({
       answer: parsedOutput.answer,
       suggestions: parsedOutput.suggestions,
     });
   } catch (error) {
     const status = error?.name === "AbortError" ? 504 : 500;
+    await logConversation({
+      request,
+      clientId,
+      model,
+      messages: request.body.messages,
+      status: "error",
+      error: error?.name || "Unknown error",
+      startedAt,
+    });
+
     return response.status(status).json({
       error: "Kul LLM could not reach Gemini. Please try again shortly.",
     });

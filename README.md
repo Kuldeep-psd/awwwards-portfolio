@@ -63,10 +63,82 @@ For local serverless testing, create `.env.local`:
 
 ```bash
 GOOGLE_AI_STUDIO_API_KEY=your_google_ai_studio_key_here
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-2.5-flash-lite
+KUL_LLM_LOG_WEBHOOK_URL=your_google_apps_script_web_app_url
+KUL_LLM_RATE_LIMIT_MAX=40
+KUL_LLM_RATE_LIMIT_WINDOW_SECONDS=60
 ```
 
 For production, add the same variables in your deployment provider's environment settings. On Vercel, add `GOOGLE_AI_STUDIO_API_KEY` and redeploy.
+
+`KUL_LLM_LOG_WEBHOOK_URL` is optional. When it is present, each Kul LLM exchange is logged to that webhook.
+
+`KUL_LLM_RATE_LIMIT_MAX` and `KUL_LLM_RATE_LIMIT_WINDOW_SECONDS` are optional. By default, one visitor can send 40 requests every 60 seconds.
+
+### Google Sheets logging
+
+1. Create a Google Sheet with this header row:
+
+```text
+Timestamp | Status | Model | Question | Answer | Suggestions | Messages | Client | User Agent | Duration | Error
+```
+
+2. In the sheet, go to Extensions > Apps Script and paste:
+
+```js
+function doPost(e) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+  const data = JSON.parse(e.postData.contents || "{}");
+
+  sheet.appendRow([
+    data.timestamp || new Date().toISOString(),
+    data.status || "",
+    data.model || "",
+    data.latestQuestion || "",
+    data.answer || "",
+    JSON.stringify(data.suggestions || []),
+    JSON.stringify(data.messages || []),
+    data.clientIdHash || "",
+    data.userAgent || "",
+    data.durationMs || "",
+    data.error || "",
+  ]);
+
+  return ContentService
+    .createTextOutput(JSON.stringify({ ok: true }))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+function testLog() {
+  const mockEvent = {
+    postData: {
+      contents: JSON.stringify({
+        timestamp: new Date().toISOString(),
+        status: "test",
+        model: "gemini-2.5-flash-lite",
+        latestQuestion: "Test question",
+        answer: "Test answer",
+        suggestions: ["Test suggestion"],
+        messages: [{ role: "user", content: "Test question" }],
+        clientIdHash: "test-client",
+        userAgent: "Apps Script manual test",
+        durationMs: 123,
+        error: "",
+      }),
+    },
+  };
+
+  doPost(mockEvent);
+}
+```
+
+3. To test inside Apps Script, run `testLog`, not `doPost`. Running `doPost` directly will fail because Apps Script only provides `postData` for real webhook requests.
+
+4. Deploy it as a Web app:
+   - Execute as: Me
+   - Who has access: Anyone
+
+5. Copy the Web app URL and set it as `KUL_LLM_LOG_WEBHOOK_URL` in `.env.local` and in Vercel.
 
 ---
 
