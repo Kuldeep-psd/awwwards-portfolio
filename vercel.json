@@ -1,8 +1,9 @@
 {
-  "rewrites": [
+  "redirects": [
     {
       "source": "/project/:path*",
-      "destination": "https://kuldeepsingh-design.vercel.app/project/:path*"
+      "destination": "https://kuldeepsingh-design.vercel.app/project/:path*",
+      "permanent": true
     }
   ]
 }
