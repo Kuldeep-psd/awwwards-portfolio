@@ -69,9 +69,11 @@ const kulLlmDevApi = () => ({
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   process.env.GOOGLE_AI_STUDIO_API_KEY =
-    process.env.GOOGLE_AI_STUDIO_API_KEY || env.GOOGLE_AI_STUDIO_API_KEY;
-  process.env.GEMINI_API_KEY = process.env.GEMINI_API_KEY || env.GEMINI_API_KEY;
-  process.env.GEMINI_MODEL = process.env.GEMINI_MODEL || env.GEMINI_MODEL;
+    env.GOOGLE_AI_STUDIO_API_KEY || process.env.GOOGLE_AI_STUDIO_API_KEY;
+  process.env.GEMINI_API_KEY = env.GEMINI_API_KEY || process.env.GEMINI_API_KEY;
+  process.env.GEMINI_MODEL = env.GEMINI_MODEL || process.env.GEMINI_MODEL;
+  process.env.KUL_LLM_LOG_WEBHOOK_URL =
+    env.KUL_LLM_LOG_WEBHOOK_URL || process.env.KUL_LLM_LOG_WEBHOOK_URL;
 
   return {
     plugins: [react(), tailwindcss(), kulLlmDevApi()],

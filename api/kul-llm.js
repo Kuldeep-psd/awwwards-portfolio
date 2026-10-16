@@ -300,6 +300,17 @@ export default async function handler(request, response) {
 
     if (!geminiResponse.ok) {
       const status = geminiResponse.status >= 500 ? 502 : geminiResponse.status;
+      const geminiError =
+        data?.error?.message ||
+        data?.error?.status ||
+        "Gemini returned an unsuccessful response.";
+
+      console.warn("Kul LLM Gemini request failed:", {
+        status: geminiResponse.status,
+        model,
+        error: geminiError,
+      });
+
       return response.status(status).json({
         error: "Kul LLM could not answer that request right now.",
       });
