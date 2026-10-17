@@ -40,7 +40,7 @@ Featured case studies:
 More work:
 - Women and Systematic Erasure - A Data Narrative. A scrollytelling project. Link: https://womenhistory.vercel.app/
 - Form Redesign - Artisan Pehchaan Card. A UI/UX audit and form redesign. Link: https://www.behance.net/gallery/238402077/Form-Redesign
-- Data Biopic - Ward Shelley. A data visualization project. Link: https://www.behance.net/gallery/238401869/Ward-Shelley-Data-Biopic
+- Garden Lumière. A WebGL movie infographic: a personal archive of 100 films becomes a nocturnal garden, one flower per film. Genre sets the flower family (eight silhouettes), source material sets the veins, IMDb vote count sets size, personal rating sets how open the petals are, runtime sets stem height, and personal impact grows roots and golden sparkles. A Flower Lab lets readers change one input and see its effect. Live project: https://garden-lumiere.vercel.app/ Case study: https://kuldeepsingh-design.vercel.app/project/garden-lumiere
 - Two Speeds of Bengaluru. A speculative analysis of Bengaluru's infrastructure: silicon speed vs physical gridlock. Framework: Metaphor Visualization. Link: https://bengaluru-pcb.vercel.app/
 
 Interests:

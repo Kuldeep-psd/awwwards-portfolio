@@ -76,7 +76,7 @@ const About = () => {
   return (
     <section id="about" className="min-h-screen bg-black rounded-b-4xl">
       <AnimatedHeaderSection
-        subTitle={"Curious by nature, grounded in design."}
+        subTitle={""}
         title={"About"}
         text={headerText}
         textColor={"text-white"}

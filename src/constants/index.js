@@ -63,30 +63,6 @@ export const projects = [
   },
   {
     id: 2,
-    name: "Form Redesign - Artisan Pehchaan Card",
-    description:
-      "An online store specializing in rare and decorative plants with a clean, user-friendly interface.",
-    href: "https://www.behance.net/gallery/238402077/Form-Redesign?lo=fe6896b1df80caa5695acbb8c39c5c00cf9ed102b9c6c092b0cc6a2f3757d90d",
-    image: "/assets/projects/form.webp",
-    bgImage: "/assets/backgrounds/curtains.jpg",
-    frameworks: [
-      { id: 1, name: "UI/UX Audit" }
-    ],
-  },
-  {
-    id: 3,
-    name: "Data Biopic - Ward Shelley",
-    description:
-      "A multi-category online shop featuring electronics, home appliances, and gaming gear with special offers.",
-    href: "https://www.behance.net/gallery/238401869/Ward-Shelley-Data-Biopic?lo=b84557e4e5762a690ec65491a9aecb6799f5fb97826e3ca1e233b1e31919d3fd",
-    image: "/assets/projects/biopic.webp",
-    bgImage: "/assets/backgrounds/poster.jpg",
-    frameworks: [
-      { id: 1, name: "Data Visualization" }
-    ]
-  },
-    {
-    id: 4,
     name: "Two Speeds of Bengaluru",
     description:
       "Silicon speed vs physical gridlock. A speculative analysis of the city's infrastructure. ",
@@ -96,6 +72,30 @@ export const projects = [
     frameworks: [
       { id: 1, name: "Metaphor Visualization" }
     ]
+  },
+  {
+    id: 3,
+    name: "Garden Lumière - 100 Films as Flowers",
+    description:
+      "A WebGL movie infographic that turns a personal archive of 100 films into a nocturnal garden, with a Flower Lab that shows how each input shapes a film's flower.",
+    href: "https://garden-lumiere.vercel.app/",
+    image: "/assets/projects/garden.webp",
+    bgImage: "/assets/backgrounds/poster.jpg",
+    frameworks: [
+      { id: 1, name: "WebGL Infographic" }
+    ]
+  },
+  {
+    id: 4,
+    name: "Form Redesign - Artisan Pehchaan Card",
+    description:
+      "An online store specializing in rare and decorative plants with a clean, user-friendly interface.",
+    href: "https://www.behance.net/gallery/238402077/Form-Redesign?lo=fe6896b1df80caa5695acbb8c39c5c00cf9ed102b9c6c092b0cc6a2f3757d90d",
+    image: "/assets/projects/form.webp",
+    bgImage: "/assets/backgrounds/curtains.jpg",
+    frameworks: [
+      { id: 1, name: "UI/UX Audit" }
+    ],
   }
 
 ];

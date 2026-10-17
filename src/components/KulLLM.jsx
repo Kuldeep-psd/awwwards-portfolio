@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import gsap from "gsap";
+import SparklesIcon from "./SparklesIcon";
 
 const starterQuestions = [
   "What projects have you worked on?",
@@ -236,12 +237,11 @@ const KulLLM = () => {
         type="button"
         onClick={openPanel}
         aria-label="Open Kul LLM"
-        className={`fixed right-6 bottom-6 z-40 inline-flex items-center gap-3 rounded-full border border-black bg-black px-5 py-4 text-sm font-medium uppercase tracking-widest text-white shadow-2xl shadow-black/20 transition-all duration-300 hover:-translate-y-1 hover:bg-DarkLava md:right-10 md:bottom-10 ${
+        className={`fixed right-6 bottom-6 z-40 grid size-14 place-items-center rounded-full bg-black text-white shadow-2xl shadow-black/20 transition-all duration-300 hover:-translate-y-1 hover:bg-DarkLava md:right-10 md:bottom-10 ${
           isOpen ? "pointer-events-none opacity-0" : "opacity-100"
         }`}
       >
-        <Icon icon="lucide:circle-dot" className="size-5" />
-        <span>Kul LLM</span>
+        <SparklesIcon />
       </button>
 
       <div

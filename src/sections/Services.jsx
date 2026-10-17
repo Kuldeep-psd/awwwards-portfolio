@@ -79,7 +79,7 @@ const Services = () => {
   return (
     <section id="projects" className="min-h-screen bg-black rounded-t-4xl">
       <AnimatedHeaderSection
-        subTitle={'The work behind the work.'}
+        subTitle={""}
         title={'Case Studies'}
         text={text}
         textColor={'text-white'}
