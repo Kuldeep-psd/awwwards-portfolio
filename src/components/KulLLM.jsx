@@ -42,7 +42,23 @@ const MessageText = ({ content, light = false }) => {
                   {part.slice(2, -2)}
                 </strong>
               ) : (
-                <span key={partIndex}>{part}</span>
+                <span key={partIndex}>
+                  {part.split(/(https?:\/\/[^\s)]*[^\s).,;:!?])/g).map((chunk, chunkIndex) =>
+                    chunkIndex % 2 ? (
+                      <a
+                        key={chunkIndex}
+                        href={chunk}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="break-all underline underline-offset-2 hover:opacity-70"
+                      >
+                        {chunk.replace(/^https?:\/\/(www\.)?/, "")}
+                      </a>
+                    ) : (
+                      chunk
+                    )
+                  )}
+                </span>
               )
             )}
           </p>

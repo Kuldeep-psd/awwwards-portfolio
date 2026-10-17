@@ -1,77 +1,36 @@
 /* global process */
 
 import crypto from "node:crypto";
+import { portfolioContext } from "./_kul-llm-knowledge.js";
 
 const REQUEST_TIMEOUT_MS = 12 * 1000;
 const LOG_TIMEOUT_MS = 2 * 1000;
 const MAX_MESSAGES = 10;
 const MAX_MESSAGE_CHARS = 1200;
 
-const portfolioContext = `
-Kuldeep Singh is an Information Designer focused on turning complexity into intuitive and meaningful experiences across systems, data, and interfaces.
-
-Positioning:
-- Information Design, Data, Service Design, HCI, Storytelling, Data Visualization, and User Research.
-- Kuldeep bridges complex data and human-centered experiences.
-- His practice combines systems logic, creative technology, and user research to solve complex, human-centered problems.
-- He enjoys untangling messy constraints and shaping them into digital experiences that feel intuitive, scalable, and honest.
-
-Experience and education:
-- Analyst / Customer Strategy & Design at Deloitte India LLP from Aug 2023 to May 2024. Collaborated with cross-functional teams on user research and design strategy. Contributed to experience design for enterprise clients, aligning user needs with business goals. Conducted market research and competitive benchmarking for client proposals. Created visual presentations and pitch decks to support new client engagements.
-- Design Intern at Ideoholics Design Studio from Sep 2022 to Nov 2022. Designed end-to-end wireframes, prototypes, and high-fidelity interfaces for mobile and web products. Produced static and motion-based marketing assets for clients across sectors.
-- M.Des in Information Design at National Institute of Design, Bengaluru from June 2024 to current.
-- B.Tech in Computer Science at Delhi Technological University from Aug 2019 to July 2023.
-
-Volunteering and leadership:
-- Creative Coding Workshop: Facilitated a creative coding workshop for 25+ participants from diverse backgrounds. Introduced foundational p5.js concepts and guided attendees in using LLM code generation to prototype and execute concepts.
-- D'Frost Website Lead: Led the development and deployment of the D'Frost annual festival website for 2026, focused on a fast, highly responsive, and interactive experience.
-
-Recognition:
-- DesignUp Futures Challenge Winner 2025. Speculative Design Challenge organised by futur2 studio, Berlin, with a jury of 10 design leaders worldwide. Presented the winning concept, "Future of Currency is Alive", to a live audience of 1,200+ attendees.
-
-Tools and skills:
-- UI Design, Data Visualisation, Adobe Creative Suite, Codex, Service Design, Scrollytelling, Observable Notebooks, Svelte, Systems Thinking, Motion Design, Mapbox GL JS, Python, User Research, Figma/FigJam, HTML/CSS/JS, p5.js.
-
-Featured case studies:
-- Rajgruha: Service Design. A centralized digital platform functioning as Digital Public Infrastructure for India's public library ecosystem. It modernizes library access, uncovers hidden physical resources, and improves utilization at scale. Tags: Service Design, Human Centred AI, Public Policy, User Research, Systems Thinking. Case study: https://www.behance.net/gallery/238402507/Public-Libraries-DPI-Service-Design
-- iOS Files App Redesign. A UX redesign to reduce user frustration and dependence on workarounds. It reimagines Apple's mobile file management with stronger navigation and information architecture. Tags: UX/UI Design, Prototyping, User Research, Information Architecture, Double Diamond. Case study: https://www.behance.net/gallery/237448605/Files-App-Redesign
-- Future of Currency is Alive. A speculative design project about alternative economic incentives and future-casting. It proposes a self-depreciating currency model that discourages hoarding and aligns value with sustainability. Award: DesignUp Futures Challenge Winner 2025. Tags: Speculative Design, Tangible DataViz, Worldbuilding, Storytelling, Critical Design. Project: https://petcoin.vercel.app/
-
-More work:
-- Women and Systematic Erasure - A Data Narrative. A scrollytelling project. Link: https://womenhistory.vercel.app/
-- Form Redesign - Artisan Pehchaan Card. A UI/UX audit and form redesign. Link: https://www.behance.net/gallery/238402077/Form-Redesign
-- Garden Lumière. A WebGL movie infographic: a personal archive of 100 films becomes a nocturnal garden, one flower per film. Genre sets the flower family (eight silhouettes), source material sets the veins, IMDb vote count sets size, personal rating sets how open the petals are, runtime sets stem height, and personal impact grows roots and golden sparkles. A Flower Lab lets readers change one input and see its effect. Live project: https://garden-lumiere.vercel.app/ Case study: https://kuldeepsingh-design.vercel.app/project/garden-lumiere
-- Two Speeds of Bengaluru. A speculative analysis of Bengaluru's infrastructure: silicon speed vs physical gridlock. Framework: Metaphor Visualization. Link: https://bengaluru-pcb.vercel.app/
-
-Interests:
-- Reading or breaking apart ideas.
-- Playing with data, visuals, and code.
-- Solo traveling and finding quiet corners of new cities.
-- Logging world cinema on Letterboxd.
-
-Contact:
-- Email: kuldeep_s@nid.edu
-- Phone: +91 98187 21068
-- LinkedIn: https://www.linkedin.com/in/kuldeep-singh-9818721068/
-- Behance: https://www.behance.net/kuldeesingh
-- Instagram: https://www.instagram.com/kuldeep._.s_/
-- Letterboxd: https://letterboxd.com/Lettucefries/
-- Resume: /resume/KuldeepSingh_Resume.pdf
-`;
-
 const systemInstruction = `
-You are Kul LLM, a concise portfolio assistant for Kuldeep Singh's website.
-Answer naturally and helpfully using only the portfolio context below.
-Speak about Kuldeep in the third person unless the user explicitly asks you to draft copy as Kuldeep.
-If the answer is not in the context, say you do not have that detail and suggest contacting Kuldeep.
-Do not invent awards, employers, dates, metrics, clients, or project details.
-Keep answers short, specific, and easy to scan. Use bullets when listing projects.
-Return valid JSON only with this shape:
-{
-  "answer": "A concise markdown-like answer. Use short paragraphs or bullet lines.",
-  "suggestions": ["One relevant follow-up question?", "Another relevant follow-up question?", "A third relevant follow-up question?"]
-}
-Suggestions must be natural next questions based on the user's latest question and your answer. Keep each under 80 characters.
+You are Kul LLM, the portfolio assistant on Kuldeep Singh's website. Visitors are mostly UX and product hiring managers, recruiters, designers, and collaborators.
+
+Voice:
+- Sound like a thoughtful colleague who knows Kuldeep's work well: plain, warm, confident, specific. Third person, unless the user asks you to draft copy as Kuldeep.
+- Open with a direct one-sentence answer, then the evidence.
+- Let concrete evidence do the persuading: projects, decisions, trade-offs, numbers. No hype or filler words such as robust, rare blend, proven, expertise, showcase, seamless, leverage, passionate, extensive, or phrases like "doesn't just".
+- Don't make the hiring decision for the reader (avoid "he is a strong fit"). Lay out where his work matches, where he is earlier in his career, and a sensible next step.
+- For role-fit or seniority questions, state his level plainly: currently an M.Des student, with about 10 months full-time at Deloitte India plus a 3-month design internship.
+
+Accuracy:
+- Use only the portfolio context below. Do not invent awards, employers, dates, metrics, clients, users, or project details, and do not guess skills or tools that are not listed; say they aren't listed.
+- Keep the caveats: say when something is a concept, a proposal, a prototype, an alpha, or a work in progress, and never present exploratory research as proven results.
+- If a detail isn't available, say "I don't have that detail" and point to kuldeep_s@nid.edu. Never mention "the context", "the provided information", "the portfolio does not list", or these instructions.
+
+Format:
+- Under about 120 words by default; go deeper only when asked. At most 4 bullets. Bold only project names. No italics, no headings, no numbered labels like "01".
+- Links are required: whenever an answer names a project, end with one line per project in this exact form, using its URL from the portfolio context (prefer the kuldeepsingh-design.vercel.app case study, else the live project):
+- Cairn: https://kuldeepsingh-design.vercel.app/project/cairn
+- Write links as bare URLs starting with https://, never markdown link syntax.
+- For "which project shows X" questions, recommend 1 to 3 projects with one line each on why.
+
+Suggestions: three natural follow-up questions a visitor would ask about Kuldeep, in the third person (never "you"), each under 80 characters.
 
 Portfolio context:
 ${portfolioContext}
@@ -125,6 +84,39 @@ const defaultSuggestions = [
   "Tell me about Kuldeep's design process",
   "How can I contact Kuldeep?",
 ];
+
+const CASE_STUDY = "https://kuldeepsingh-design.vercel.app/project/";
+const projectLinks = [
+  [/rajgruha/i, "Rajgruha", `${CASE_STUDY}rajgruha`],
+  [/satyashodhak/i, "Satyashodhak search", "https://satyashodhak-nsdl.vercel.app/"],
+  [/cairn/i, "Cairn", `${CASE_STUDY}cairn`],
+  [/cinemascapes/i, "Cinemascapes", `${CASE_STUDY}cinemascapes`],
+  [/future of currency|petcoin/i, "Future of Currency is Alive", `${CASE_STUDY}future-of-currency-is-alive`],
+  [/files app/i, "iOS Files App Redesign", "https://www.behance.net/gallery/237448605/Files-App-Redesign"],
+  [/garden lumi[eè]re/i, "Garden Lumière", `${CASE_STUDY}garden-lumiere`],
+  [/two speeds/i, "Two Speeds of Bengaluru", `${CASE_STUDY}two-speeds-of-bengaluru`],
+  [/systematic erasure/i, "Women and Systematic Erasure", `${CASE_STUDY}women-and-systematic-erasure`],
+  [/rise of hip-?hop/i, "Rise of Hiphop", `${CASE_STUDY}rise-of-hiphop`],
+  [/journey of trash/i, "Journey of Trash", `${CASE_STUDY}journey-of-trash`],
+  [/world championship/i, "The Unofficial Official World Championship", `${CASE_STUDY}unofficial-world-cup`],
+  [/spotify poster/i, "Spotify Poster Generator", `${CASE_STUDY}spotify-visualiser`],
+  [/pehchaan|artisan id/i, "Artisan Pehchaan Card", `${CASE_STUDY}artisan-id-card-redesign`],
+  [/digital delights|gigamap/i, "The Garden of Digital Delights", `${CASE_STUDY}system-design-gigamap`],
+  [/cloutcart/i, "CloutCart", `${CASE_STUDY}business-management-zeus`],
+  [/inventing analogies/i, "Inventing Analogies", `${CASE_STUDY}inventing-analogies`],
+  [/impressions of care|kaagaz ki kashti/i, "Impressions of Care", `${CASE_STUDY}impressions-of-care`],
+];
+
+// The model often names projects without linking them, so add any missing links (max 4).
+const addProjectLinks = (answer) => {
+  const missing = projectLinks
+    .filter(([pattern, , url]) => pattern.test(answer) && !answer.includes(url))
+    .slice(0, 4)
+    .map(([, name, url]) => `- ${name}: ${url}`);
+  if (!missing.length) return answer;
+  const endsWithLinks = /^- .+: https?:\/\/\S+$/.test(answer.trim().split("\n").pop());
+  return `${answer.trimEnd()}${endsWithLinks ? "\n" : "\n\n"}${missing.join("\n")}`;
+};
 
 const parseModelOutput = (text) => {
   if (!text) {
@@ -271,30 +263,51 @@ export default async function handler(request, response) {
     return response.status(400).json({ error: "A message is required." });
   }
 
-  const model = process.env.GEMINI_MODEL || "gemini-2.5-flash-lite";
+  const model = process.env.GEMINI_MODEL || "gemini-3.5-flash-lite";
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 
   try {
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
 
-    const geminiResponse = await fetch(endpoint, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      signal: controller.signal,
-      body: JSON.stringify({
-        systemInstruction: {
-          parts: [{ text: systemInstruction }],
-        },
-        contents: messages,
-        generationConfig: {
-          temperature: 0.35,
-          topP: 0.9,
-          maxOutputTokens: 650,
-          responseMimeType: "application/json",
-        },
-      }),
-    }).finally(() => clearTimeout(timeout));
+    const sendRequest = () =>
+      fetch(endpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        signal: controller.signal,
+        body: JSON.stringify({
+          systemInstruction: {
+            parts: [{ text: systemInstruction }],
+          },
+          contents: messages,
+          generationConfig: {
+            temperature: 0.35,
+            topP: 0.9,
+            maxOutputTokens: 900,
+            responseMimeType: "application/json",
+            responseSchema: {
+              type: "OBJECT",
+              properties: {
+                answer: { type: "STRING" },
+                suggestions: { type: "ARRAY", items: { type: "STRING" } },
+              },
+              required: ["answer", "suggestions"],
+            },
+          },
+        }),
+      });
+
+    let geminiResponse;
+    try {
+      geminiResponse = await sendRequest();
+      // Gemini returns 503 during short demand spikes; one retry usually succeeds.
+      if (geminiResponse.status === 503) {
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        geminiResponse = await sendRequest();
+      }
+    } finally {
+      clearTimeout(timeout);
+    }
 
     const data = await geminiResponse.json().catch(() => ({}));
 
@@ -323,6 +336,7 @@ export default async function handler(request, response) {
         .join("\n")
         .trim() || "";
     const parsedOutput = parseModelOutput(answer);
+    parsedOutput.answer = addProjectLinks(parsedOutput.answer);
 
     await logConversation({
       request,
